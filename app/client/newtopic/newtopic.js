@@ -1,6 +1,7 @@
 Template.newtopic.events({
   'click #submit-node': function () {
     var username = document.getElementById("username-submit").value;
+    console.log(username)
     var nodeBody = document.getElementById("body-submit").value;
     Session.set('username', username);
 
