@@ -9,6 +9,8 @@ insecure
 d3
 alethes:lodash
 iron:router
+mizzao:bootstrap-3
+json
 
 accounts-ui
 accounts-password

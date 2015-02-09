@@ -130,6 +130,25 @@
 	overflow-y:auto;
 	z-index:1;
 }
+/**/
+#infobox 
+{
+	position: absolute;
+	right:29.9%;
+	top: 74%;
+	left: 0%;
+	bottom: 2%;
+	text-align: center;
+
+	border-color:black;
+	border: 1px solid;
+	overflow-y: auto;
+}
+
+#hover {
+	display: inline-block;
+}
+
 
 .viewer-padding
 {

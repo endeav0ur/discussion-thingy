@@ -22,7 +22,7 @@ Template.graph.rendered = function(){
   var target;
 
   force = d3.layout.force()
-    .linkDistance(80)
+    .linkDistance(80) //increase distance based upon number of nodes
     .charge(-160)
     .gravity(.05)
     .size([1200, 500])
@@ -208,15 +208,24 @@ Template.graph.rendered = function(){
       .attr("cy", function(d) { return d.y; });
   }
 
+  function mouseoverBody(d){
+    var nodeBody = d.body;
+    var node = document.getElementById('hover');
+    node.innerHTML = nodeBody;
+   }
+
+
   function mouseover(d) {
     if (d3.event.defaultPrevented)
       return;
+
 
     var mousedOver = Session.get('mousedOver');
     if(mousedOver){
       var c = self.graphElem.select("circle[_id=node" + mousedOver._id + "]")
       var p = self.graphElem.select("path[_id=edge"+ mousedOver._id + "]")
-
+      mouseoverBody(d);
+      //console.log(b); //instantiate function that pulls body
 
       if(c[0][0])
         c.classed('highlighted', false);
