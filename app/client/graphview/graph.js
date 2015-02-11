@@ -21,7 +21,7 @@ Template.graph.rendered = function(){
   var targetType;
   var target;
 
-  force = d3.layout.force()
+  var force = d3.layout.force()
     .linkDistance(80)
     .charge(-160)
     .gravity(.05)
@@ -38,16 +38,12 @@ Template.graph.rendered = function(){
     else if(target = Links.findOne({_id:target_id})){
       targetType = "edge";
     }
-
-    // nodes = [];
-    // links = [];
-
   })
 
   // Calculating node changes
   Deps.autorun(function(){
     meteorNodes = Nodes.find({root_id:target.root_id}).fetch();
-    
+
     if(nodes.length == 0)
       var isFresh = true;
 
@@ -65,9 +61,9 @@ Template.graph.rendered = function(){
     if(isFresh){
       DOMnodes.enter()
         .append("circle")
-        .attr("class", "node")
-        .attr("r", 12)
-        .attr("_id", function(d){ return "node" + d._id; })
+        .attr("class",function(d) { return "node " + d.type; })
+        .attr("r", function(d) { return (Math.sqrt(d.value*d.value) + 5) * 1.5; }) // handles negative values
+        .attr("_id", function(d) { return "node" + d._id; })
         .on("mouseover", mouseover)
         .on("dblclick", doubleclick)
         .call(force.drag());
@@ -76,8 +72,8 @@ Template.graph.rendered = function(){
       DOMnodes.enter()
         .append("circle")
         .attr("class", "node unread") // here's the difference
-        .attr("r", 12)
-        .attr("_id", function(d){ return "node" + d._id; })
+        .attr("r", function(d) { return (Math.sqrt(d.value*d.value) + 5) * 1.5; }) // handles negative values
+        .attr("_id", function(d) { return "node" + d._id; })
         .on("mouseover", mouseover)
         .on("dblclick", doubleclick)
         .call(force.drag());
@@ -203,7 +199,7 @@ Template.graph.rendered = function(){
       return "M " + d.source.x + " " + d.source.y + " L " + offsets.x + " " +
       offsets.y;
     })
-    
+
     node.attr("cx", function(d) { return d.x; })
       .attr("cy", function(d) { return d.y; });
   }
