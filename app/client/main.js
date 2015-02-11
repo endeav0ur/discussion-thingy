@@ -7,7 +7,6 @@ Meteor.startup(function(){
   height = 700;
 })
 
-<<<<<<< HEAD
 //adding a loading spinner for a better UX experience.
 // Router.configure({
 //   loadingTemplate: 'loading',
@@ -15,8 +14,6 @@ Meteor.startup(function(){
 //       return [Meteor.subscribe('nodes'), Meteor.subscribe('edges')];
 //     }
 // });
-=======
->>>>>>> ed94764ecbb059881751a332153d78bc7f7aef25
 
 Template.dropper.events({
   'click #drop': function(){

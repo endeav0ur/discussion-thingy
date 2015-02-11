@@ -12,8 +12,6 @@ iron:router
 accounts-ui
 accounts-password
 ewall:foundation
-<<<<<<< HEAD
 sacha:spin
-=======
 autopublish
->>>>>>> ed94764ecbb059881751a332153d78bc7f7aef25
+
