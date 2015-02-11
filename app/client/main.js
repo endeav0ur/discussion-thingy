@@ -4,9 +4,16 @@ Meteor.subscribe("allUserData");
 
 Meteor.startup(function(){
   width = 960;
-  height = 500;
+  height = 700;
 })
 
+//adding a loading spinner for a better UX experience.
+// Router.configure({
+//   loadingTemplate: 'loading',
+//     waitOn: function() {
+//       return [Meteor.subscribe('nodes'), Meteor.subscribe('edges')];
+//     }
+// });
 
 Template.dropper.events({
   'click #drop': function(){
