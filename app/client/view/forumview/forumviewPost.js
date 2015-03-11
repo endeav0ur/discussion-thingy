@@ -123,7 +123,7 @@ Template.forumviewPost.events({
     edge.root_id = this.root_id
     edge.target_id = this._id;
 
-    Meteor.call('newNode', node, edge)
+    Meteor.call('newNode', node, edge);
     Session.set("hasPosted", true);
 
     // lodash pull doesn't work for some reason.

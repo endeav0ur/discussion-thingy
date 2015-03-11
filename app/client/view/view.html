@@ -10,7 +10,10 @@
 
 </template>
 
-<template name="newtag">
-  <span> Newtag </span>
+<template name="tags">
   <input type="text" />
+  <span> Tags: </span>
+  {{#each getTags _id}}
+    <span>[<span id="tag-remove">x</span> {{this}}]</span>
+  {{/each}}
 </template>

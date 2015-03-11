@@ -27,7 +27,7 @@
           <span class="post-utility post-replybutton" id="replybutton-{{_id}}">Reply</span>
         {{/if}}
         {{#if isOwnPost user}}
-          <span class="post-utility post-tagbutton" id="tagbutton-{{_id}}"> Tag </span>
+          <span class="post-utility post-tagbutton" id="tagbutton-{{_id}}"> Tags </span>
         {{/if}}
       </div>
       {{#if isCommenting _id}}
@@ -46,7 +46,7 @@
         </div>
       {{/if}}
       {{#if isTagging _id}}
-        {{> newtag}}
+        {{> tags}}
       {{/if}}
       {{#each children}}
         {{> forumviewPost}}

@@ -88,8 +88,13 @@ Meteor.methods({
     }
 
     Chatter.insert(messageObject);
+  },
+  newTag: function(_id, tag){
+    Nodes.update({_id:_id}, {$addToSet:{tags:tag.trim().toLowerCase()}});
+  },
+  removeTag: function(_id, tag){
+    Nodes.update({_id:_id}, {$pull:{tags:tag}});
   }
-
 });
 
 var newNode = function(node_id, target_id, user_id){
