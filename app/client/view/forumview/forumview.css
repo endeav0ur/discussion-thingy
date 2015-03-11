@@ -23,12 +23,7 @@
   font-size:13px;
 }
 
-.post-replybutton{
-  cursor: pointer;
-  cursor: hand;
-}
-
-.post-closebutton{
+.post-utility{
   cursor: pointer;
   cursor: hand;
 }

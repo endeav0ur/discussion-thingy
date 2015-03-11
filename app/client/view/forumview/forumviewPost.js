@@ -1,5 +1,13 @@
 
 Template.forumviewPost.helpers({
+  isTagging: function(_id){
+    return Session.get("tagging") == _id;
+  },
+  isOwnPost: function(user){
+    if(!Meteor.user())
+      return false;
+    return user._id == Meteor.user()._id;
+  },
   color: function(value){
     if(value > 0)
       return "green";
@@ -58,6 +66,9 @@ Template.forumviewPost.helpers({
 // For some reason, these event callbacks are called multiple times per click.
 // Maybe a FIXME eventually.
 Template.forumviewPost.events({
+  'click .post-tagbutton': function(event){
+    Session.set("tagging", event.target.id.replace("tagbutton-", ""));
+  },
   'click .post-replybutton':function(event){
     var clicked_id = event.target.id.replace("replybutton-", "");
     var commenting = Session.get("isCommenting");
