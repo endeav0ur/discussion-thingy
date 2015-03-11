@@ -6,7 +6,7 @@ Template.topics.helpers({
     return body.substring(0, 197) + "...";
   },
   topicList: function(){
-    return Nodes.find({$where:"this.root_id == this._id"}, {sort:{timestamp:-11}});
+    return Nodes.find({$where:"this.root_id == this._id"}, {sort:{timestamp:-1}});
   },
   getTime: function(timestamp){
     var now = Date.now();
@@ -36,4 +36,4 @@ Template.topics.helpers({
     return Math.floor(seconds) + " seconds ago";
 
   }
-})
+});

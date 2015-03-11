@@ -24,7 +24,7 @@ Template.tags.helpers({
     var node = Nodes.findOne({_id:_id})
     if(!node)
       return []
-    
+
     return node.tags;
   }
 });

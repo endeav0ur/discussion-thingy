@@ -3,7 +3,16 @@ Nodes = new Meteor.Collection("nodes");
 Links = new Meteor.Collection("links");
 Chatter = new Meteor.Collection("Chatter");
 
-Meteor.users.initEasySearch('username');
+EasySearch.createSearchIndex('nodes', {
+  'field' : ['tags'],
+  'collection' : Nodes,
+  'query' : function (searchString) {
+    var query = EasySearch.getSearcher(this.use).defaultQuery(this, searchString);
+    query.tags = searchString;
+    if(searchString)
+      return query;
+  }
+});
 
 if (Meteor.is_server){
 	Nodes.allow({
