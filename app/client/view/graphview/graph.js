@@ -30,7 +30,7 @@ Template.graph.rendered = function(){
 
   // Will change when target changes, loads all connected nodes.
   // needed for separate link code, might need phasing out
-  Deps.autorun(function(){
+  Tracker.autorun(function(){
     var target_id = Session.get('target_id')
 
     if(target = Nodes.findOne({_id:target_id})){
@@ -42,17 +42,18 @@ Template.graph.rendered = function(){
   })
 
   // Calculating node changes
-  Deps.autorun(function(){
+  Tracker.autorun(function(){
     meteorNodes = Nodes.find({root_id:target.root_id}).fetch();
 
     if(nodes.length == 0)
       var isFresh = true;
 
     var newNodes = _.difference(meteorNodes, nodes);
+
+    // addNode(newNodes, nodes, self);
     newNodes.forEach(function(n){
       nodes.push(n);
     });
-
 
     // LOOKINTO, does the selection change dynamically when elements are added?
     var DOMnodes = self.nodes.selectAll("*")
@@ -92,40 +93,44 @@ Template.graph.rendered = function(){
   })
 
   // Calculates link changes.
-  Deps.autorun(function(){
+  Tracker.autorun(function(){
 
     //FIXME: This fetches all links?
-    var meteorLinks = Links.find().fetch();
-    var newLinks = _.difference(meteorLinks, links);
-    newLinks.forEach(function(e){
-      var sourceNode = nodes.filter(function(n) { return n._id === e.source; })[0],
-          targetNode = nodes.filter(function(n) { return n._id === e.target; })[0];
+    var meteorLinks = Links.find().fetch(); // finds the links in collection
+    var newLinks = _.difference(meteorLinks, links); // check for the difference betweeen Meteors links and D3's
 
-      // Add the edge to the array
-      if(sourceNode && targetNode)
-        links.push({source: sourceNode, target: targetNode, type:e.type, _id:e._id});
-    });
+    addLink(newLinks, nodes, links, self);
 
-    var DOMLinks = self.edges.selectAll("*")
-      .data(links)
+    // newLinks.forEach(function(e){
+    //   var sourceNode = nodes.filter(function(n) { return n._id === e.source; })[0],
+    //       targetNode = nodes.filter(function(n) { return n._id === e.target; })[0];
+    //
+    //   // Add the edge to the array
+    //   if(sourceNode && targetNode)
+    //     links.push({source: sourceNode, target: targetNode, type:e.type, _id:e._id});
+    // });
+    //
+    // var DOMLinks = self.edges.selectAll("*")
+    //   .data(links)
+    //
+    // DOMLinks.enter()
+    //   .append("path")
+    //   .attr("class", function(e) { return "edge " + e.type + "-edge"})
+    //   .attr("_id", function(e) { return "edge" + e._id })
+    //   .attr("marker-end", "url(#Triangle)")
+    //   .on("mouseover", mouseover);
+    //
+    // DOMLinks.exit()
+    //   .remove();
+    //
+    // force
+    //   .links(links)
+    //   .start()
 
-    DOMLinks.enter()
-      .append("path")
-      .attr("class", function(e) { return "edge " + e.type + "-edge"})
-      .attr("_id", function(e) { return "edge" + e._id })
-      .attr("marker-end", "url(#Triangle)")
-      .on("mouseover", mouseover);
-
-    DOMLinks.exit()
-      .remove();
-
-    force
-      .links(links)
-      .start()
   })
 
   // handles logic for state changes
-  Deps.autorun(function(){
+  Tracker.autorun(function(){
     var state = Session.get('state');
 
     // state should only be around when graph first spins up
@@ -298,6 +303,82 @@ Template.graph.rendered = function(){
     Session.set('selected', mousedOver._id);
     checkNotification();
   }
+}
+
+var addLink = function(linkData, nodeData, linkArray, self){
+  linkData.forEach(function(e){
+    var sourceNode = nodeData.filter(function(n){ return n._id === e.source; })[0];
+    var targetNode = nodeData.filter(function(n){ return n._id == e.target; })[0];
+    //if not main parent node
+    if(sourceNode && targetNode){
+      linkArray.push({
+        source: sourceNode,
+        target: targetNode,
+        type: e.type,
+        _id:e._id
+      });
+    }
+  });
+
+  var DOMLinks = self.edges.selectAll("*")
+    .data(linkArray)
+
+  DOMLinks.enter()
+    .append("path")
+    .attr("class", function(e) { return "edge " + e.type + "-edge"})
+    .attr("_id", function(e) { return "edge" + e._id})
+    .attr("marker-end", "url(#Triangle)")
+    .on("mouseover", mouseover);
+  DOMLinks.exit()
+    .remove();
+  force
+    .links(linkArray)
+    .start()
+}
+
+var addNode = function(newNodes, nodes, self){
+  if(nodes.length == 0)
+    var isFresh = true;
+
+  newNodes.forEach(function(n){
+    nodes.push(n);
+  });
+
+  // LOOKINTO, does the selection change dynamically when elements are added?
+  var DOMnodes = self.nodes.selectAll("*")
+    .data(nodes, function(d){ return d._id});
+
+  // 'node' + d._id is because the id field isn't allowed to begin with numbers.
+  if(isFresh){
+    DOMnodes.enter()
+      .append("circle")
+      .attr("class",function(d) { return "node " + d.type; })
+      .attr("r", function(d) { return (Math.abs(d.value) + 5) * 1.5; }) // handles negative values
+      .attr("_id", function(d) { return "node" + d._id; })
+      .on("mouseover", mouseover)
+      .on("dblclick", doubleclick)
+      .call(force.drag());
+
+      selectHighlighted();
+  }
+  else{
+    DOMnodes.enter()
+      .append("circle")
+      .attr("class", "node unread statement") // here's the difference, also the statement part is a bit ratchet.
+      .attr("r", function(d) { return (Math.sqrt(d.value*d.value) + 5) * 1.5; }) // handles negative values
+      .attr("_id", function(d) { return "node" + d._id; })
+      .on("mouseover", mouseover)
+      .on("dblclick", doubleclick)
+      .call(force.drag());
+  }
+
+  // FIXME- This won't work as expected, get it to run like data selection.
+  DOMnodes.exit()
+    .remove()
+
+  force
+    .nodes(nodes)
+    .start()
 }
 
 var checkNotification = function(){
