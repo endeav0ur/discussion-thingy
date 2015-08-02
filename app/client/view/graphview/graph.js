@@ -66,7 +66,6 @@ Template.graph.rendered = function(){
         .attr("r", function(d) { return (Math.abs(d.value) + 5) * 1.5; }) // handles negative values
         .attr("_id", function(d) { return "node" + d._id; })
         .on("mouseover", mouseover)
-        .on("dblclick", doubleclick)
         .call(force.drag());
 
         selectHighlighted();
@@ -78,7 +77,6 @@ Template.graph.rendered = function(){
         .attr("r", function(d) { return (Math.sqrt(d.value*d.value) + 5) * 1.5; }) // handles negative values
         .attr("_id", function(d) { return "node" + d._id; })
         .on("mouseover", mouseover)
-        .on("dblclick", doubleclick)
         .call(force.drag());
     }
 
