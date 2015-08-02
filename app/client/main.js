@@ -36,6 +36,14 @@ Template.dropper.isUserAdmin = function(){
   }
 }
 
+UI.registerHelper("colorValue", function (value){
+  if(value > 0)
+    return "green";
+  if(value < 0)
+    return "red";
+  return "black";
+})
+
 // The helper and function are separate so that the function can be called within
 // other helpers, but we don't need to redefine the helper every time we want to use
 // it.
@@ -79,7 +87,7 @@ Accounts.ui.config({
 
 // If target is node:
 // 	if root is self:
-// 		find all nodes and edges with root as target root 
+// 		find all nodes and edges with root as target root
 // 	else if root is not self
 // 		find all nodes and edges with root as target root
 

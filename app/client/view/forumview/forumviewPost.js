@@ -1,12 +1,5 @@
 
 Template.forumviewPost.helpers({
-  color: function(value){
-    if(value > 0)
-      return "green";
-    if(value < 0)
-      return "red";
-    return "black";
-  },
   isCommenting: function(_id){
     return !! _.find(Session.get("isCommenting"), function(c){
       return c == _id;
