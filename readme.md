@@ -6,6 +6,6 @@ It's also worth mentioning that this implementation of Gadfly happens to contain
 
 At an abstract level, the reason for this project's existence is that I think that consensus-aggregating systems that take advantage of the internet's capabilities are going to become more and more necessary as society grows in complexity.
 
-[Here's my presentation on Gadfly from the Meteor Devshop](https://www.youtube.com/watch?v=Gt0KG9wUpec)
+[Here's my presentation on Gadfly from the Meteor Devshop](https://www.youtube.com/watch?v=Gt0KG9wUpec). Also, the wiki has some extra information.
 
 Email me at tylsmith@gmail.com for any reason at all.
