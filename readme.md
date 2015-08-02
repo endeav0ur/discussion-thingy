@@ -1,22 +1,9 @@
-# The worst commit of our generation
+Gadfly is a **software-independent** set of rules for using semantically defined comments to try to make consensus more scalable.  So, you can "use" the system with pen and paper if you want, but it's designed with the internet in mind.  This is the repo for a prototype implementation of it as a web application.  You can play with it here. 
 
-This is a web application for nested commenting that allows users to semantically tag their posts as agreements or disagreements.  The goal of this was to provide a means of mathematically quantifying consensus for democratic and managerial purposes.  Fundamentally, I think that the movement of (ugh hang on I have to think)
+The way Gadfly works is that it's a nested commenting system, except that you can tag your comments as agreements or disagreements.  All comments start with a value of 1, agreements add their value to the thing they refer to, and disagreements subtract their value.  So the theory is that no matter how divergent your argument/discussion is, it never truly gets off-topic because the discussion always culminates in a number that can be used as a conclusion.  Also, unlike just voting, it requires people to justify their opinions.  If you didn't get it, don't worry, there's a more drawn-out explanation here, or, once again, you can actually play with it here.
 
-This project is inactive.  I realized that the fundamental component of what made Gadfly interesting was the ability/willingness to semantically tag your own data, and so [Firebeer](https://github.com/omariio/firebeer) is the indirect continuation of the digital democracy components of Gadfly but built around the idea of extending the semantic tagging for any use whatsoever (if you think this explanation sucks that's because it does, I'm still trying to attack the semantic web, it's an interesting problem).
+It's also worth mentioning that this implementation of Gadfly happens to contain an experimental way of viewing/interacting with nested comments that we refer to as the "graph view".  It's based on [D3's Force Layout](https://github.com/mbostock/d3/wiki/Force-Layout) and it's fundamentally unrelated to Gadfly, though it's advantageous for conveying information in some ways, in addition to being fun and spunky.
 
-The wiki for this repo has some documents that I wrote a while ago about the democratic applications of these (kind of arbitrary, in retrospect) semantic tags.  Gadfly is really more of a concept that I'm pushing for at this point, but I'm not going about the same road I was of just building a web application for it
+At an abstract level, the reason for this project's existence is that I think that consensus-aggregating systems that take advantage of the internet's capabilities are going to become more and more necessary as society grows in complexity.
 
--Tyler
-
-# Old readme
-
-Very briefly, this is a prototype webapp for a branching comment system (kind of like Reddit) except to be used specifically for arguments.
-
-At an abstract level, the reason why I'm doing this is because I think that one of the fundamental problems with society is that the more people need to be included in making a decision, the harder it is to reach a consensus.  I'm really interested in seeing if the internet can be used to effectively tackle this problem.
-
-I've put a lot of thought into this project.  
-
-Send me an email at tylsmith@gmail.com for any reason at all.
-
-[A currentish version of the webapp should be up here](http://gadfly.meteor.com/)
-
+Email me at tylsmith@gmail.com for any reason at all.
